@@ -5,28 +5,6 @@ import Vaga from '../Modelo/vaga.js';
 import conectar from './conexao.js';
 
 export default class EntrevistaDAO {
-    constructor() {
-        this.init();
-    }
-
-    async init() {
-        try {
-            const conexao = await conectar();
-            const sql = `
-                CREATE TABLE IF NOT EXISTS entrevistas (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    id_inscricao INT NOT NULL,
-                    data_entrevista DATETIME NOT NULL,
-                    status VARCHAR(50),
-                    FOREIGN KEY (id_inscricao) REFERENCES inscricoes(id) ON DELETE CASCADE
-                )
-            `;
-            await conexao.execute(sql);
-            global.poolConexoes.releaseConnection(conexao);
-        } catch (e) {
-            console.log('Não foi possível iniciar o banco de dados: ' + e.message);
-        }
-    }
 
     async gravar(entrevista) {
         if (entrevista instanceof Entrevista) {

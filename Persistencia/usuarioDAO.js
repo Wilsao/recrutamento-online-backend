@@ -3,28 +3,6 @@ import conectar from './conexao.js';
 import bcrypt from 'bcrypt';
 
 export default class UsuarioDAO {
-    constructor() {
-        this.init();
-    }
-
-    async init() {
-        try {
-            const conexao = await conectar();
-            const sql = `
-        CREATE TABLE IF NOT EXISTS usuarios (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          nome VARCHAR(255) NOT NULL,
-          email VARCHAR(100) NOT NULL UNIQUE,
-          senha VARCHAR(255) NOT NULL,
-          tipo ENUM('candidato', 'recrutador') DEFAULT 'candidato'
-        )
-      `;
-            await conexao.execute(sql);
-            global.poolConexoes.releaseConnection(conexao);
-        } catch (e) {
-            console.log('Não foi possível iniciar o banco de dados: ' + e.message);
-        }
-    }
 
     async gravar(usuario) {
         if (usuario instanceof Usuario) {

@@ -4,30 +4,6 @@ import Vaga from '../Modelo/vaga.js';
 import conectar from './conexao.js';
 
 export default class InscricaoDAO {
-    constructor() {
-        this.init();
-    }
-
-    async init() {
-        try {
-            const conexao = await conectar();
-            const sql = `
-        CREATE TABLE IF NOT EXISTS inscricoes (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          id_candidato INT NOT NULL,
-          id_vaga INT NOT NULL,
-          data_inscricao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          UNIQUE (id_candidato, id_vaga),
-          FOREIGN KEY (id_candidato) REFERENCES candidatos(id) ON DELETE CASCADE,
-          FOREIGN KEY (id_vaga) REFERENCES vagas(id) ON DELETE CASCADE
-        )
-      `;
-            await conexao.execute(sql);
-            global.poolConexoes.releaseConnection(conexao);
-        } catch (e) {
-            console.log('Não foi possível iniciar o banco de dados: ' + e.message);
-        }
-    }
 
     async gravar(inscricao) {
         if (inscricao instanceof Inscricao) {

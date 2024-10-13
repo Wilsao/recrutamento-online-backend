@@ -2,58 +2,6 @@ import Candidato from '../Modelo/candidato.js';
 import conectar from './conexao.js';
 
 export default class CandidatoDAO {
-    constructor() {
-        this.init();
-    }
-
-    async init() {
-        try {
-            const conexao = await conectar();
-            const sql = `
-        CREATE TABLE IF NOT EXISTS candidatos (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          nome VARCHAR(255) NOT NULL,
-          ctps_numero VARCHAR(50),
-          ctps_serie VARCHAR(50),
-          data_nascimento DATE,
-          cpf VARCHAR(14),
-          rg VARCHAR(20),
-          orgao_emissor VARCHAR(50),
-          endereco VARCHAR(255),
-          numero VARCHAR(10),
-          bairro VARCHAR(100),
-          municipio VARCHAR(100),
-          uf VARCHAR(2),
-          cep VARCHAR(10),
-          naturalidade VARCHAR(100),
-          telefone VARCHAR(20),
-          celular VARCHAR(20),
-          email VARCHAR(100),
-          ensino_fundamental_completo BOOLEAN DEFAULT FALSE,
-          ensino_medio_completo BOOLEAN DEFAULT FALSE,
-          ensino_superior_completo BOOLEAN DEFAULT FALSE,
-          curso VARCHAR(255),
-          titulo_eleitor_numero VARCHAR(20),
-          zona_eleitoral VARCHAR(10),
-          pis VARCHAR(20),
-          cnh_numero VARCHAR(20),
-          estado_civil ENUM('casado', 'solteiro', 'divorciado', 'separado', 'amigado'),
-          nome_pai VARCHAR(255),
-          nome_mae VARCHAR(255),
-          nome_conjuge VARCHAR(255),
-          residencia_propria BOOLEAN DEFAULT FALSE,
-          certidao_militar_numero VARCHAR(20),
-          certidao_militar_serie VARCHAR(20),
-          certidao_militar_categoria VARCHAR(20),
-          possui_filhos BOOLEAN DEFAULT FALSE
-        )
-      `;
-            await conexao.execute(sql);
-            global.poolConexoes.releaseConnection(conexao);
-        } catch (e) {
-            console.log('Não foi possível iniciar o banco de dados: ' + e.message);
-        }
-    }
 
     async gravar(candidato) {
         if (candidato instanceof Candidato) {
